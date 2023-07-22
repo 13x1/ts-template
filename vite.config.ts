@@ -20,10 +20,22 @@ export default defineConfig({
     },
     plugins: [
         dts({
-            exclude: ['./vite.config.ts']
+            exclude: ['./vite.config.ts', './src/tests/**/*']
         }),
         tsconfigPaths()
     ],
+    test: {
+        include: ['./src/tests/**/*.test.ts'],
+        benchmark: {
+            outputFile: './test-results/vitest-benchmark.json'
+        },
+        outputFile: './test-results/vitest-report/index.html',
+        reporters: ['html', 'default'],
+        coverage: {
+            provider: 'v8',
+            reportsDirectory: './test-results/vitest-coverage'
+        }
+    }
 })
 
 // helper to generate entry
