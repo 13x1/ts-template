@@ -1,15 +1,17 @@
 // vite.config.js
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import dts from 'vite-plugin-dts'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import { toEntry } from './viteExporter.js';
+
+// relative to ./src/
+const exports = ["main.ts"]
+const main = exports[0]
 
 export default defineConfig({
     build: {
         lib: {
-            entry: resolve(__dirname, 'src/main.ts'),
-            name: 'ts-template',
-            fileName: 'main',
+            entry: toEntry({exports, main}),
             formats: ['es', 'cjs'],
         },
         sourcemap: true,
